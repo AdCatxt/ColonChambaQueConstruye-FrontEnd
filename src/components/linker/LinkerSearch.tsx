@@ -51,10 +51,10 @@ export function LinkerSearch({ filters }: LinkerSearchProps) {
     }
   };
 
-  const getFilterValue = (key: string) => {
+  const getFilterValue = (key: string, isDate?: boolean) => {
     const val = searchParams.get(key);
-    if (!val) return [];
-    return val.split(',');
+    if (!val) return isDate ? '' : [];
+    return isDate ? val : val.split(',');
   };
 
   return (
@@ -82,7 +82,7 @@ export function LinkerSearch({ filters }: LinkerSearchProps) {
               variant={filter.isDate ? 'date' : 'checkbox'}
               label={filter.name}
               options={filter.options}
-              value={getFilterValue(filter.value)}
+              value={getFilterValue(filter.value, filter.isDate)}
               onChange={(value) => {
                 updateQueryParams(filter.value, value as string | string[]);
               }}

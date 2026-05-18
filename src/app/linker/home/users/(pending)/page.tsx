@@ -69,8 +69,8 @@ export default function UsersPage() {
       const academicLevel = searchParams.get('academicLevel');
       if (academicLevel) query.append('academicLevel', academicLevel);
 
-      const registeredAtFilter = searchParams.get('registeredAt');
-      if (registeredAtFilter) query.append('registeredAt', registeredAtFilter);
+      const dateFilter = searchParams.get('dateFilter');
+      if (dateFilter) query.append('dateFilter', dateFilter);
 
       const response = await apiService.get(`/linkers/${linkerId}/users?${query.toString()}`);
 

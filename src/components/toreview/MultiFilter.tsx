@@ -25,16 +25,25 @@ export function MultiFilter({
   onChange,
 }: MultiFilterProps) {
   const [selected, setSelected] = useState<string[]>(() => (Array.isArray(value) ? value : []));
-  const [date, setDate] = useState<Date | undefined>(() =>
-    value instanceof Date ? value : undefined,
-  );
+  const [date, setDate] = useState<Date | undefined>(() => {
+    if (typeof value === 'string' && value) {
+      return new Date(value);
+    }
+    return value instanceof Date ? value : undefined;
+  });
 
   useEffect(() => {
     if (variant === 'checkbox' && Array.isArray(value)) {
       setSelected(value);
     }
-    if (variant === 'date' && value instanceof Date) {
-      setDate(value);
+    if (variant === 'date') {
+      if (typeof value === 'string' && value) {
+        setDate(new Date(value));
+      } else if (value instanceof Date) {
+        setDate(value);
+      } else {
+        setDate(undefined);
+      }
     }
   }, [value, variant]);
 
@@ -52,7 +61,8 @@ export function MultiFilter({
 
   const handleDateChange = (newDate: Date | undefined) => {
     setDate(newDate);
-    onChange?.(newDate);
+    const dateString = newDate ? format(newDate, 'yyyy-MM-dd') : undefined;
+    onChange?.(dateString);
   };
 
   const displayValue = () => {

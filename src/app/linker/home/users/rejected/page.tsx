@@ -72,8 +72,8 @@ export default function CompaniesRejectedPage() {
       const academicLevel = searchParams.get('academicLevel');
       if (academicLevel) query.append('academicLevel', academicLevel);
 
-      const dateFilter = searchParams.get('date');
-      if (dateFilter) query.append('date', dateFilter);
+      const dateFilter = searchParams.get('dateFilter');
+      if (dateFilter) query.append('dateFilter', dateFilter);
 
       const response = await apiService.get(`/linkers/${linkerId}/users?${query.toString()}`);
 
